@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+$:.unshift File.expand_path('../../lib', __FILE__)
+require 'optparse'
+require 'loop/version'
+
+options = {
+  :interval => 0.5
+}
+
+ARGV << '-h' if ARGV.empty?
+
+ARGV.options do |o|
+  script_name = File.basename($0)
+  o.set_summary_width(20)
+  o.set_summary_indent('  ')
+  o.banner = ''
+  o.separator 'Usage: %s [options] <cmd>' % script_name
+  o.separator ''
+  o.separator 'Options:'
+  o.separator ''
+  o.on('-i', '--interval=val', Float, 'Interval in seconds default to 0.5') { |v| options[:interval] = v }
+  o.on('-v', '--version', 'Display the version number') { puts Loop::VERSION; exit }
+  o.on('-h', '--help', 'Show this help message') { puts o; exit }
+  o.separator ''
+  o.parse!
+  o.permute!
+end
+
+trap(:INT) { abort 'Exiting ...' }
+loop { system(*ARGV); sleep options[:interval] }
