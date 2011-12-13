@@ -22,14 +22,14 @@ $ (sudo) gem install loop
 
 ## About
 
-  This project is very a port of [watch(2)](https://github.com/visionmedia/watch) implemented by VisionMedia.
+  This project is a port of [watch(2)](https://github.com/visionmedia/watch) implemented by VisionMedia.
 
 ## Milliseconds resolution
 
  We support millisecond resolution i.e.:
 
 ```
-$ watch -i 0.3 echo hey
+$ loop -i 0.3 echo hey
 ```
 
 ## Examples
@@ -59,6 +59,7 @@ JS=$(patsubst app/assets/js/%.coffee, public/javascripts/%.js, $(COFFEE))
 STYLUS=$(shell find app/assets/css -name '*.styl' -type f)
 
 all: $(JS) public/stylesheets/app.css
+	@echo -n
 
 public/javascripts/%.js: app/assets/js/%.coffee
 	coffee -b -o public/javascripts -c $<
